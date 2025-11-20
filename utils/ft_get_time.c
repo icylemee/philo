@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clean_data.c                                    :+:      :+:    :+:   */
+/*   ft_get_time.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlemee <mlemee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/15 21:41:54 by mlemee            #+#    #+#             */
-/*   Updated: 2025/11/20 15:44:20 by mlemee           ###   ########.fr       */
+/*   Created: 2025/11/18 16:50:31 by mlemee            #+#    #+#             */
+/*   Updated: 2025/11/20 15:48:19 by mlemee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_full_cleanup(t_data *data)
+long	ft_get_time(void)
 {
-	int	i;
+	struct timeval	tv;
 
-	i = -1;
-	while (++i < data->num_philos)
-		pthread_mutex_destroy(&data->forks[i]);
-	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->death_mutex);
-	free(data->forks);
-	free(data->philos);
-	free(data);
+	if (gettimeofday(&tv, NULL))
+		return (printf("Error gettimeofday\n"), -1);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
